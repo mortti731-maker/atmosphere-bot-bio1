@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: telegram-bio-bot
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: TELEGRAM_TOKEN
+        sync: false
+      - key: DOMAIN
+        sync: false
+      - key: USE_WEBHOOK
+        value: "true"
+      - key: WEBHOOK_URL
+        sync: false

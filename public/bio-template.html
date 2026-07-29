@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Био</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body, html { width: 100%; height: 100%; overflow: hidden; }
+
+        body {
+            background: url("{{ bg_url }}") no-repeat center center;
+            background-size: cover;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        /* Затемнение фона для лучшей читаемости */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 0;
+        }
+
+        /* Плашка */
+        .card {
+            position: relative;
+            z-index: 1;
+            background: rgba(20, 20, 30, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            width: 90%;
+            max-width: 380px;
+            border-radius: 28px;
+            padding: 35px 25px 30px;
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+
+            /* Свечение */
+            box-shadow:
+                0 0 30px rgba(100, 150, 255, 0.3),
+                0 0 60px rgba(100, 150, 255, 0.1),
+                0 20px 40px rgba(0, 0, 0, 0.5);
+
+            /* Граница со свечением */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+
+            /* Анимация выезда */
+            animation: slideUpGlow 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideUpGlow {
+            0% {
+                transform: translateY(100%) scale(0.9);
+                opacity: 0;
+                box-shadow: 0 0 0px rgba(100, 150, 255, 0);
+            }
+            60% {
+                transform: translateY(-10%) scale(1.02);
+                opacity: 1;
+                box-shadow: 0 0 50px rgba(100, 150, 255, 0.5);
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+                box-shadow:
+                    0 0 30px rgba(100, 150, 255, 0.3),
+                    0 0 60px rgba(100, 150, 255, 0.1);
+            }
+        }
+
+        /* Аватарка */
+        .avatar-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+
+            /* Свечение аватарки */
+            box-shadow:
+                0 0 20px rgba(255, 255, 255, 0.4),
+                0 0 40px rgba(100, 180, 255, 0.3);
+
+            /* Анимация появления */
+            animation: avatarPop 0.6s ease-out 0.3s both;
+        }
+
+        @keyframes avatarPop {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Пульсирующее кольцо вокруг аватарки */
+        .avatar-wrapper::after {
+            content: '';
+            position: absolute;
+            top: -8px; left: -8px;
+            width: 126px; height: 126px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.08);
+                opacity: 0.2;
+            }
+        }
+
+        /* Имя/ник */
+        .name {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            animation: fadeIn 0.6s ease-out 0.5s both;
+        }
+
+        /* Текст */
+        .text {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-size: 15px;
+            line-height: 1.6;
+            opacity: 0.9;
+            white-space: pre-wrap;
+            animation: fadeIn 0.6s ease-out 0.7s both;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Индикатор */
+        .indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #4ade80;
+            border-radius: 50%;
+            margin-right: 6px;
+            box-shadow: 0 0 10px #4ade80;
+            animation: glow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px #4ade80; }
+            50% { box-shadow: 0 0 20px #4ade80, 0 0 30px #4ade80; }
+        }
+
+        .status {
+            font-size: 13px;
+            opacity: 0.7;
+            margin-top: 15px;
+            animation: fadeIn 0.6s ease-out 0.9s both;
+        }
+
+        /* Адаптив для телефонов */
+        @media (max-width: 480px) {
+            .card {
+                width: 92%;
+                padding: 25px 20px 20px;
+                margin-bottom: 20px;
+            }
+            .avatar {
+                width: 90px;
+                height: 90px;
+            }
+            .avatar-wrapper::after {
+                width: 106px; height: 106px;
+                top: -8px; left: -8px;
+            }
+            .name { font-size: 19px; }
+            .text { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="avatar-wrapper">
+            <img class="avatar" src="{{ ava_url }}" alt="Avatar">
+        </div>
+        <div class="text">{{ text }}</div>
+        <div class="status">
+            <span class="indicator"></span> онлайн
+        </div>
+    </div>
+</body>
+</html>

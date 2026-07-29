@@ -1,0 +1,185 @@
+/* Основные стили для био-страницы */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 1;
+}
+
+.bio-container {
+    position: relative;
+    z-index: 2;
+    width: 90%;
+    max-width: 800px;
+    perspective: 1000px;
+}
+
+.bio-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transform-style: preserve-3d;
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.bio-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transform: translateX(-100%);
+    transition: transform 2s linear;
+    pointer-events: none;
+}
+
+.bio-card:hover::before {
+    transform: translateX(100%);
+}
+
+.avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 0 auto 30px;
+    background-size: cover;
+    background-position: center;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    transition: all 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.avatar::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(45deg);
+    animation: avatar-shine 3s infinite;
+}
+
+.bio-text {
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.6;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.bio-text::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #fff, transparent);
+    animation: text-underline 2s infinite;
+}
+
+/* Анимации */
+@keyframes avatar-shine {
+    0% {
+        transform: rotate(45deg) translate(-20%, -20%);
+    }
+    100% {
+        transform: rotate(45deg) translate(20%, 20%);
+    }
+}
+
+@keyframes text-underline {
+    0%, 100% {
+        width: 100px;
+        opacity: 0.5;
+    }
+    50% {
+        width: 150px;
+        opacity: 1;
+    }
+}
+
+@keyframes card-pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .bio-card {
+        padding: 30px 20px;
+    }
+
+    .avatar {
+        width: 120px;
+        height: 120px;
+    }
+
+    .bio-text {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .bio-card {
+        padding: 20px 15px;
+    }
+
+    .avatar {
+        width: 100px;
+        height: 100px;
+    }
+
+    .bio-text {
+        font-size: 18px;
+    }
+}
