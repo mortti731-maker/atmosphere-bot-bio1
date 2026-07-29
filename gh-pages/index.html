@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Био</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body, html { width: 100%; min-height: 100vh; overflow-x: hidden; }
+
+        body {
+            background-size: cover;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Затемнение фона */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 0;
+        }
+
+        /* Плашка */
+        .card {
+            position: relative;
+            z-index: 1;
+            background: rgba(20, 20, 30, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            width: 100%;
+            max-width: 100%;
+            border-radius: 28px;
+            padding: 40px 30px;
+            text-align: center;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                0 0 30px rgba(100, 150, 255, 0.3),
+                0 0 60px rgba(100, 150, 255, 0.1),
+                0 20px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideUpGlow 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideUpGlow {
+            0% {
+                transform: translateY(100%) scale(0.9);
+                opacity: 0;
+                box-shadow: 0 0 0px rgba(100, 150, 255, 0);
+            }
+            60% {
+                transform: translateY(-10%) scale(1.02);
+                opacity: 1;
+                box-shadow: 0 0 50px rgba(100, 150, 255, 0.5);
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+                box-shadow:
+                    0 0 30px rgba(100, 150, 255, 0.3),
+                    0 0 60px rgba(100, 150, 255, 0.1);
+            }
+        }
+
+        /* Аватарка */
+        .avatar-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            box-shadow:
+                0 0 20px rgba(255, 255, 255, 0.4),
+                0 0 40px rgba(100, 180, 255, 0.3);
+            animation: avatarPop 0.6s ease-out 0.3s both;
+        }
+
+        @keyframes avatarPop {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Пульсирующее кольцо */
+        .avatar-wrapper::after {
+            content: '';
+            position: absolute;
+            top: -8px; left: -8px;
+            width: 126px; height: 126px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.08); opacity: 0.2; }
+        }
+
+        /* Имя */
+        .name {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            animation: fadeIn 0.6s ease-out 0.5s both;
+        }
+
+        /* Текст */
+        .text {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-size: 15px;
+            line-height: 1.6;
+            opacity: 0.9;
+            white-space: pre-wrap;
+            animation: fadeIn 0.6s ease-out 0.7s both;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Индикатор */
+        .indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #4ade80;
+            border-radius: 50%;
+            margin-right: 6px;
+            box-shadow: 0 0 10px #4ade80;
+            animation: glow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px #4ade80; }
+            50% { box-shadow: 0 0 20px #4ade80, 0 0 30px #4ade80; }
+        }
+
+        .status {
+            font-size: 13px;
+            opacity: 0.7;
+            margin-top: 15px;
+            animation: fadeIn 0.6s ease-out 0.9s both;
+        }
+
+        /* Мобильные */
+        @media (max-width: 480px) {
+            .card { padding: 30px 20px; border-radius: 20px; }
+            .avatar { width: 100px; height: 100px; }
+            .avatar-wrapper::after { width: 116px; height: 116px; top: -8px; left: -8px; }
+            .name { font-size: 20px; }
+            .text { font-size: 15px; }
+        }
+
+        /* Десктоп */
+        @media (min-width: 768px) {
+            .card { max-width: 500px; padding: 60px 40px; }
+            .avatar { width: 140px; height: 140px; }
+            .avatar-wrapper::after { width: 156px; height: 156px; top: -8px; left: -8px; }
+            .name { font-size: 26px; }
+            .text { font-size: 17px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="avatar-wrapper">
+            <img class="avatar" id="avatar" src="" alt="Avatar">
+        </div>
+        <div class="text" id="text"></div>
+        <div class="status">
+            <span class="indicator"></span> онлайн
+        </div>
+    </div>
+
+    <script>
+        // Получаем данные из URL
+        const params = new URLSearchParams(window.location.search);
+        const bg = params.get('bg') || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1974&q=80';
+        const ava = params.get('ava') || 'https://i.pravatar.cc/300?img=1';
+        const text = params.get('text') || 'Привет! Это моя био-страница.';
+
+        // Применяем данные
+        document.body.style.backgroundImage = 'url("' + bg + '")';
+        document.getElementById('avatar').src = ava;
+        document.getElementById('text').textContent = text;
+    </script>
+</body>
+</html>
