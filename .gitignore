@@ -4,3 +4,7 @@ node_modules/
 .DS_Store
 dist/
 .qodo/
+target/
+*.class
+*.jar
+*.war
